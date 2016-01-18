@@ -11,17 +11,18 @@
 #include <ns3/gnuplot.h>
 #include <string.h>
 #include <math.h>
-
+ 
 using namespace ns3;
 
 NS_LOG_COMPONENT_DEFINE ("Topologia");
 
 // Se tienen numClientes dispositivos que actúan como clientes y numServidores dispostivos
 // que actúan como servidores. Todos ellos se conectan a un dispositivo central (Engine) que
-// hace las tareas de router + switch + balanceador 
+// hace las tareas de router + switch + balanceador.
+// En la implementación final: Engine+Servidores misma red y clientes en internet
 
 // Topología
-//			     10.1.1.0/24
+//		10.1.1.0/24
 //                clientes
 //                   |
 //       ------------------------
@@ -29,8 +30,19 @@ NS_LOG_COMPONENT_DEFINE ("Topologia");
 //       ------------------------
 //        |      |      |      |
 //      serv0  serv1   ...  servN
-//			    10.1.1.254/24
+//             10.1.1.254/24
 //
+
+// En esta primera versión está todo desarrollado en una red local, es decir, clientes, servidores y Engine se encuentran
+// en la misma red, por eso no se ha usado IP para encaminar (Engine = switch)
+
+// To Do: 
+//	- Usar enrutamiento IP
+//	- Jerarquizar clientes mediantes más switchs fuera de la red local
+//	- Mecanismos de balanceo de carga (idea, usar redes definidas por software (SDN)) por:
+//		- Más configurables
+//		- Soportan varios mecanismos
+//		- Tengo idea de cómo hacerlo
 
 int main (int argc, char *argv[]) {
 
