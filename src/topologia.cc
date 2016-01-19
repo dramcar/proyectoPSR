@@ -87,6 +87,7 @@ int main (int argc, char *argv[]) {
 	// Servidores
 	for (int i = 0; i < server_number; i++)
 	{
+<<<<<<< HEAD
 		NetDeviceContainer link = csma.Install(NodeContainer(servers.Get(i), csmaSwitch));
     	serverDevices.Add(link.Get(0));		// Extremo servidor
     	switchDevices.Add(link.Get(1));		// Extremo switch
@@ -149,6 +150,19 @@ int main (int argc, char *argv[]) {
     		break;
     	}
     }
+=======
+		NetDeviceContainer link = csma.Install(NodeContainer(servidores.Get(i), csmaEngine));
+		servidorDev.Add(link.Get(0));	// Extremo equipo
+		engineDev.Add(link.Get(1));	// Extremo engine
+	}
+	// Clientes
+	for (int i = 0; i < numClientes; i++)
+	{
+		NetDeviceContainer link = csma.Install(NodeContainer(clientes.Get(i), csmaEngine));
+		clienteDev.Add(link.Get(0));	// Extremo equipo
+		engineDev.Add(link.Get(1));	// Extremo engine
+	}
+>>>>>>> 74e47f4f43fe016fe21dff2241b80f8d370b6556
 
   	// Añadimos la pila de internet a los equipos
     InternetStackHelper internet;
@@ -156,10 +170,17 @@ int main (int argc, char *argv[]) {
     internet.Install(clients);
 
   	// Asigna dirección IP a los servidores
+<<<<<<< HEAD
     NS_LOG_INFO ("Asignando dirección IP a los servidores...");
     for (int i = 0; i < server_number; i++) {
 		Ptr<NetDevice> device = serverDevices.Get(i);	// device = servidor i 
 		Ptr<Node> node = device->GetNode();				// node = nodo del servidor i
+=======
+	NS_LOG_INFO ("Asignando dirección IP a los servidores...");
+	for (int i = 0; i < numServidores; i++) {
+		Ptr<NetDevice> device = servidorDev.Get(i);		// device = servidor i 
+		Ptr<Node> node = device->GetNode();			// node = nodo del servidor i
+>>>>>>> 74e47f4f43fe016fe21dff2241b80f8d370b6556
 		Ptr<Ipv4> ipv4 = node->GetObject<Ipv4>();		// ipv4 = objeto IP del nodo del servidor i
 
 		int32_t interface = ipv4->GetInterfaceForDevice(device); 	// interface = interfaz del servidor i
@@ -201,7 +222,7 @@ int main (int argc, char *argv[]) {
   	}
 
   	// Creamos sumideros para los servidores
-  	NS_LOG_INFO ("Creando sumidero para los clientes...");
+  	NS_LOG_INFO ("Creando sumidero para los servidores...");
   	
   	// Sumidero 
   	PacketSinkHelper sink("ns3::UdpSocketFactory",Address(InetSocketAddress(Ipv4Address::GetAny(), port)));
